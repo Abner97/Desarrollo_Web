@@ -1,10 +1,10 @@
-var Mocha = require("mocha");
-var chai = require("chai");
+var Mocha = require('mocha')
+var chai = require('chai')
 var assert = chai.assert;
-var mocha = new Mocha();
+var mocha = new Mocha()
 
 // Bit of a hack, sorry!
-mocha.suite.emit("pre-require", this, "solution", mocha);
+mocha.suite.emit('pre-require', this, 'solution', mocha)
 
 /* 
 The world is in quarantine! Corona virus struggles mankind. 
@@ -31,89 +31,85 @@ percentage = 100*11/15 = 73.33333333333333
 @returns {float} percentage of the total population that got infected.
 */
 
+
 function infected(mapOfWorld) {
   let population = 0;
-  let infectedPeople = 0;
+  let infectedPeople =0;
   let infected = false;
-  let char = "";
-  let contX = 0;
-  let contInfected = 0;
-  let contHealthy = 0;
-  let TempPopulation = 0;
+  let char="";
+  let contX=0;
+  let contInfected=0;
+  let contHealthy=0;
+  let TempPopulation=0;
   //let percentage;
 
-  for (let i = 0; i <= mapOfWorld.length; i++) {
-    char = mapOfWorld.charAt(i);
-
-    if (char == "1") {
-      infected = true;
+  for (let i=0;i<=mapOfWorld.length;i++){
+    char=mapOfWorld.charAt(i);
+    
+    if(char=='1'){
+      infected=true;
       contInfected++;
-    } else if (char == "0") {
-      contHealthy++;
+    }else if(char=='0'){
+       contHealthy++;
     }
 
-    if (char == "X") {
+    if(char=='X'){
       contX++;
-      if (infected) {
-        infectedPeople = infectedPeople + TempPopulation;
-        TempPopulation = 0;
-        infected = false;
-      } else {
-        TempPopulation = 0;
+      if(infected){
+        infectedPeople=infectedPeople+TempPopulation;
+        TempPopulation=0;
+        infected=false;
+      }else{
+        TempPopulation=0;
       }
-    } else {
+    }else{
       TempPopulation++;
     }
-
-    if (i == mapOfWorld.length && infected) {
-      infectedPeople = infectedPeople + TempPopulation - 1;
-    }
+  
+    if(i==mapOfWorld.length && infected){
+      infectedPeople=infectedPeople+TempPopulation-1;
+  }
   }
 
-  if (contX == 0) {
-    if (infected) {
+  if(contX==0){
+    if(infected){
       //console.log(TempPopulation);
-      infectedPeople = TempPopulation - 1;
+      infectedPeople=TempPopulation-1;
+     
     }
   }
-
-  population = contHealthy + contInfected;
+  
+   
+  
+  population=contHealthy+contInfected;
   /*console.log(mapOfWorld);
   console.log(population);
   console.log(infectedPeople);
   console.log(contX);*/
-
-  if (population != 0) {
-    return (100 * infectedPeople) / population;
-  } else {
+  
+  if(population!=0){
+    return ((100*infectedPeople)/population);
+  }else{
     return 0;
   }
+  
+ 
 }
+
 
 /* DO NOT MODIFY BELOW THIS LINE */
 
 const EPSILON = 0.000001;
 
-describe("Pandemia", () => {
-  it("example tests", () => {
-    assert.approximately(
-      infected("01000000X000X011X0X"),
-      73.33333333333333,
-      EPSILON
-    );
-    assert.approximately(
-      infected("01X000X010X011XX"),
-      72.72727272727273,
-      EPSILON
-    );
-    assert.approximately(infected("XXXXX"), 0, EPSILON);
-    assert.approximately(infected("0000000010"), 100, EPSILON);
-    assert.approximately(
-      infected("X00X000000X10X0100"),
-      42.857142857142854,
-      EPSILON
-    );
+describe("Pandemia",()=>{
+  it("example tests",()=>{
+    assert.approximately( infected("01000000X000X011X0X"), 73.33333333333333, EPSILON );
+    assert.approximately( infected("01X000X010X011XX"), 72.72727272727273, EPSILON );
+    assert.approximately( infected("XXXXX"), 0, EPSILON );
+    assert.approximately( infected("0000000010"), 100, EPSILON );
+    assert.approximately( infected("X00X000000X10X0100"), 42.857142857142854, EPSILON );
+    
   });
 });
 
-mocha.run();
+mocha.run()
